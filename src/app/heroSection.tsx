@@ -1,12 +1,17 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Header from './shared/header';
 import Footer from './shared/footer';
 
 const HeroSection = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
+    // Trigger animation after component mounts
+    setIsVisible(true);
+
     // Particle effect for magic
     const createParticles = () => {
       const container = document.querySelector('.particles-container');
@@ -82,8 +87,10 @@ const HeroSection = () => {
           </svg>
         </div>
         
-        {/* Glowing text container */}
-        <div className="text-center px-4 z-10 relative">
+        {/* Glowing text container with slide-in animation */}
+        <div className={`text-center px-4 z-10 relative transition-all duration-1000 ease-out transform ${
+          isVisible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'
+        }`}>
           {/* Animated title with gradient */}
           <h1 className="text-5xl md:text-7xl font-bold mb-4">
             <span className="text-white">Legends of Victory:</span>{' '}

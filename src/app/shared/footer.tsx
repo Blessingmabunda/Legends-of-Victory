@@ -45,7 +45,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
   ];
 
   return (
-    <footer className={`bg-black/50 backdrop-blur-sm py-8 px-6 ${className}`}>
+    <footer className={`bg-black py-8 px-6 ${className}`}>
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
         {/* Logo with animation */}
         <motion.div
@@ -89,7 +89,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
         custom={socialLinks.length}
         className="mt-8 text-center text-white/70 text-sm"
       >
-        &copy; {new Date().getFullYear()} Mettlestate Esports. All rights reserved.
+        © {new Date().getFullYear()} Mettlestate Esports. All rights reserved.
       </motion.div>
     </footer>
   );
