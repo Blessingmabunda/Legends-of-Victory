@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { fetchUsers } from './../api/utils/api';
-import { User, Player, Particle } from './../api/types/models';
+import { Player, Particle } from './../api/types/models';
 import Header from '../shared/header';
 import Footer from './../shared/footer';
 
@@ -247,7 +247,7 @@ const Leaderboard = () => {
             <div className="bg-gradient-to-r from-[#ef4444]/10 to-[#ef4444]/10 backdrop-blur-sm rounded-2xl border border-[#ef4444]/30 p-8 max-w-2xl mx-auto">
               <h3 className="text-3xl font-bold text-white mb-4">Think You Can Compete?</h3>
               <p className="text-gray-300 mb-6">
-                Join the battle and climb your way to the top! Register now and show these champions what you're made of.
+                Join the battle and climb your way to the top! Register now and show these champions what you&apos;re made of.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button className="relative bg-gradient-to-r from-[#ef4444] via-gray-600 to-blue-600 hover:from-[#ef4444] hover:via-gray-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl group overflow-hidden">
