@@ -108,12 +108,15 @@ const FAQSection = () => {
 
   return (
     <div style={{
-        backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.15)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')",
-      }}>
+      backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.15)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed',
+    }}>
       <Header transparent={true} />
       
-      <section className="relative min-h-screen bg-gradient-to-br from-black via-gray-800 to-black py-20 overflow-hidden">
-
+            <section className="relative min-h-screen py-20 overflow-hidden">
+  
         {/* Animated Background Particles */}
         <div className="absolute inset-0 pointer-events-none">
           {particles.map((particle) => (
