@@ -25,7 +25,7 @@ const Trophy = ({ className, rank }: { className?: string; rank: number }) => {
 
   return (
     <svg className={`${className} ${colors[rank as keyof typeof colors] || 'text-gray-500'}`} fill="currentColor" viewBox="0 0 24 24">
-      <path d="M19 5h-2V3H7mockv2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v Cohort3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z" />
+      <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z" />
     </svg>
   );
 };
@@ -306,7 +306,7 @@ const Leaderboard = () => {
                 Think You Can Compete?
               </h3>
               <p className="text-gray-300 mb-6">
-                Join the battle and climb your way to the top! Register now and show these champions what you're made of.
+                Join the battle and climb your way to the top! Register now and show these champions what you&apos;re made of.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button className="relative bg-gradient-to-r from-[#ef4444] via-gray-600 to-blue-600 hover:from-[#ef4444] hover:via-gray-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl group overflow-hidden animate-pulse">
