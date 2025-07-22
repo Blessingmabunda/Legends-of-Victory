@@ -4,12 +4,15 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from './../shared/header';
 import Footer from './../shared/footer';
-interface Particle {
+
+// Local Particle type with color
+interface ParticleWithColor {
   id: number;
   x: number;
   y: number;
   delay: number;
   duration: number;
+  color: string;
 }
 
 const Sword = ({ className }: { className?: string }) => (
@@ -26,18 +29,24 @@ const Trophy = ({ className }: { className?: string }) => (
 
 const FAQSection = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [particles, setParticles] = useState<Particle[]>([]);
+  const [particles, setParticles] = useState<ParticleWithColor[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // Trigger animations after mount
+    setIsVisible(true);
+
+    // Create particles
     const createParticles = () => {
-      const newParticles = [];
-      for (let i = 0; i < 20; i++) {
+      const newParticles: ParticleWithColor[] = [];
+      for (let i = 0; i < 30; i++) {
         newParticles.push({
           id: i,
           x: Math.random() * 100,
           y: Math.random() * 100,
           delay: Math.random() * 5,
-          duration: Math.random() * 3 + 2,
+          duration: Math.random() * 10 + 10, // 10–20s
+          color: ['#ef4444', '#8b5cf6', '#f59e0b'][Math.floor(Math.random() * 3)],
         });
       }
       setParticles(newParticles);
@@ -108,148 +117,192 @@ const FAQSection = () => {
   };
 
   return (
-    <div style={{
-      backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.15)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')",
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundAttachment: 'fixed',
-    }}>
+    <div
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.15)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       <Header transparent={true} />
-      
-            <section className="relative min-h-screen py-20 overflow-hidden">
-  
+
+      <section className="relative min-h-screen py-20 overflow-hidden">
         {/* Animated Background Particles */}
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 pointer-events-none z-0">
           {particles.map((particle) => (
             <div
               key={particle.id}
-              className="absolute w-2 h-2 bg-[#ef4444] rounded-full opacity-20"
+              className="absolute w-3 h-3 rounded-full opacity-70 animate-particle"
               style={{
                 left: `${particle.x}%`,
                 top: `${particle.y}%`,
-                animation: `float-particle ${particle.duration}s ${particle.delay}s infinite ease-in-out`,
-              }}
+                background: particle.color,
+                animation: `particle-move ${particle.duration}s ${particle.delay}s infinite linear`,
+                boxShadow: `0 0 8px ${particle.color}, 0 0 12px ${particle.color}80`,
+                '--tx': `${Math.random() * 100 - 50}px`,
+                '--ty': `${Math.random() * 100 - 50}px`,
+              } as React.CSSProperties}
             />
           ))}
         </div>
-  
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-repeat" style={{
-            backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.15)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')",
-          }} />
+
+        {/* Floating Icons */}
+        <div className="absolute top-20 left-10 animate-float opacity-70">
+          <Sword className="w-12 h-12 text-[#ef4444]" />
         </div>
-  
+        <div className="absolute bottom-20 right-10 animate-float-reverse opacity-70">
+          <Trophy className="w-12 h-12 text-yellow-500" />
+        </div>
+
         <div className="container mx-auto px-6 relative z-10">
           {/* Section Header */}
-          <div className="text-center mb-16">
+          <div
+            className={`text-center mb-16 transition-all duration-1000 ease-out transform ${
+              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+            }`}
+          >
             <div className="inline-block mb-6">
               <div className="flex items-center justify-center space-x-3 bg-gradient-to-r from-[#ef4444]/20 to-[#ef4444]/20 backdrop-blur-sm rounded-full px-8 py-3 border border-[#ef4444]/30">
-                <Sword className="w-6 h-6 text-[#ef4444]" />
-                <span className="text-[#ef4444] font-semibold tracking-wider uppercase text-sm">Frequently Asked Questions</span>
-                <Trophy className="w-6 h-6 text-yellow-500" />
+                <Sword className="w-6 h-6 text-[#ef4444] animate-pulse" />
+                <span className="text-[#ef4444] font-semibold tracking-wider uppercase text-sm">
+                  Frequently Asked Questions
+                </span>
+                <Trophy className="w-6 h-6 text-yellow-500 animate-pulse" />
               </div>
             </div>
-            
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[#ef4444] via-gray-300 to-blue-500">
+
+            <h2 className="text-5xl md:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[#ef4444] via-gray-300 to-blue-500 animate-pulse-slow">
               Everything You Need to Know
             </h2>
-            
+
             <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
               Get ready for the ultimate gaming experience! Find answers to all your questions about the most epic Battle Royale tournament of the year.
             </p>
           </div>
-  
+
           {/* FAQ Accordion */}
           <div className="max-w-4xl mx-auto">
             {faqData.map((faq, index) => (
               <div
                 key={index}
-                className="mb-6 bg-gradient-to-r from-gray-900/50 to-gray-800/30 backdrop-blur-sm rounded-2xl border border-[#ef4444]/20 shadow-2xl overflow-hidden transition-all duration-500 hover:border-[#ef4444]/40 hover:shadow-[#ef4444]/20"
+                className={`mb-6 bg-gradient-to-r from-gray-900/50 to-gray-800/30 backdrop-blur-sm rounded-2xl border border-[#ef4444]/20 shadow-2xl transition-all duration-500 hover:border-[#ef4444]/40 hover:shadow-[#ef4444]/20 hover:scale-105 transform animate-faq-entrance`}
+                style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <button
                   onClick={() => toggleAccordion(index)}
                   className="w-full p-8 text-left flex items-center justify-between group transition-all duration-300 hover:bg-[#ef4444]/10"
                 >
                   <div className="flex items-center space-x-4">
-                    <div className={`p-3 rounded-full transition-all duration-300 ${
-                      activeIndex === index 
-                        ? 'bg-gradient-to-r from-[#ef4444] to-gray-600 text-white shadow-lg' 
-                        : 'bg-gray-800/50 text-[#ef4444] group-hover:bg-[#ef4444]/30'
-                    }`}>
+                    <div
+                      className={`p-3 rounded-full transition-all duration-300 ${
+                        activeIndex === index
+                          ? 'bg-gradient-to-r from-[#ef4444] to-gray-600 text-white shadow-lg'
+                          : 'bg-gray-800/50 text-[#ef4444] group-hover:bg-[#ef4444]/30'
+                      }`}
+                    >
                       {faq.icon}
                     </div>
-                    <h3 className={`text-xl md:text-2xl font-bold transition-colors duration-300 ${
-                      activeIndex === index 
-                        ? 'text-white' 
-                        : 'text-gray-200 group-hover:text-white'
-                    }`}>
+                    <h3
+                      className={`text-xl md:text-2xl font-bold transition-colors duration-300 ${
+                        activeIndex === index
+                          ? 'text-white'
+                          : 'text-gray-200 group-hover:text-white'
+                      }`}
+                    >
                       {faq.question}
                     </h3>
                   </div>
-                  
-                  <svg 
+
+                  <svg
                     className={`w-6 h-6 transition-all duration-300 ${
-                      activeIndex === index 
-                        ? 'transform rotate-180 text-[#ef4444]' 
+                      activeIndex === index
+                        ? 'transform rotate-180 text-[#ef4444]'
                         : 'text-gray-400 group-hover:text-[#ef4444]'
                     }`}
-                    fill="none" 
-                    stroke="currentColor" 
+                    fill="none"
+                    stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
-                
-                <div className={`transition-all duration-500 ease-in-out ${
-                  activeIndex === index 
-                    ? 'max-h-96 opacity-100' 
-                    : 'max-h-0 opacity-0'
-                } overflow-hidden`}>
+
+                <div
+                  className={`transition-all duration-500 ease-in-out ${
+                    activeIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  } overflow-hidden`}
+                >
                   <div className="px-8 pb-8 pt-0">
                     <div className="ml-16 pr-8">
                       <div className="h-px bg-gradient-to-r from-[#ef4444]/50 to-transparent mb-6"></div>
-                      <p className="text-gray-300 text-lg leading-relaxed">
-                        {faq.answer}
-                      </p>
+                      <p className="text-gray-300 text-lg leading-relaxed">{faq.answer}</p>
                     </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-  
+
           {/* Call to Action */}
-          <div className="text-center mt-16">
+          <div
+            className={`text-center mt-16 transition-all duration-1000 ease-out transform ${
+              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+            }`}
+          >
             <div className="bg-gradient-to-r from-[#ef4444]/10 to-[#ef4444]/10 backdrop-blur-sm rounded-2xl border border-[#ef4444]/30 p-8 max-w-2xl mx-auto">
-              <h3 className="text-3xl font-bold text-white mb-4">Ready to Join the Battle?</h3>
+              <h3 className="text-3xl font-bold text-white mb-4 animate-pulse-slow">
+                Ready to Join the Battle?
+              </h3>
               <p className="text-gray-300 mb-6">
                 Still have questions? Join our Discord community for instant support from tournament officials and fellow competitors!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/register">
-                <button className="relative bg-gradient-to-r from-[#ef4444] via-gray-600 to-blue-600 hover:from-[#ef4444] hover:via-gray-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl group overflow-hidden">
-                  <span className="relative z-10">Join the Battle</span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-shine"></span>
-                </button>
+                <Link href="/register">
+                  <button className="relative bg-gradient-to-r from-[#ef4444] via-gray-600 to-blue-600 hover:from-[#ef4444] hover:via-gray-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl group overflow-hidden animate-pulse">
+                    <span className="relative z-10">Join the Battle</span>
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-shine"></span>
+                  </button>
                 </Link>
-                <button className="border-2 border-[#ef4444] text-[#ef4444] hover:bg-[#ef4444] hover:text-white font-bold py-3 px-8 rounded-lg transition-all duration-300">
+                <button className="border-2 border-[#ef4444] text-[#ef4444] hover:bg-[#ef4444] hover:text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 animate-pulse">
                   Join Discord
                 </button>
               </div>
             </div>
           </div>
         </div>
-  
+
         {/* Custom CSS for animations */}
         <style jsx>{`
-          @keyframes float-particle {
+          @keyframes particle-move {
+            0% {
+              transform: translate(0, 0);
+              opacity: 0.7;
+            }
+            100% {
+              transform: translate(var(--tx), var(--ty));
+              opacity: 0;
+            }
+          }
+          @keyframes float {
             0%, 100% {
-              transform: translateY(0px) rotate(0deg);
+              transform: translateY(0) rotate(0deg);
+              opacity: 0.7;
             }
             50% {
-              transform: translateY(-20px) rotate(180deg);
+              transform: translateY(-25px) rotate(6deg);
+              opacity: 0.9;
+            }
+          }
+          @keyframes float-reverse {
+            0%, 100% {
+              transform: translateY(0) rotate(0deg);
+              opacity: 0.7;
+            }
+            50% {
+              transform: translateY(25px) rotate(-6deg);
+              opacity: 0.9;
             }
           }
           @keyframes shine {
@@ -260,12 +313,46 @@ const FAQSection = () => {
               transform: translateX(100%);
             }
           }
+          @keyframes pulse-slow {
+            0%, 100% {
+              transform: scale(1);
+            }
+            50% {
+              transform: scale(1.05);
+            }
+          }
+          @keyframes faq-entrance {
+            0% {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          .animate-particle {
+            animation: particle-move var(--duration) linear infinite;
+            will-change: transform, opacity;
+          }
+          .animate-float {
+            animation: float 6s ease-in-out infinite;
+          }
+          .animate-float-reverse {
+            animation: float-reverse 7s ease-in-out infinite;
+          }
           .animate-shine {
             animation: shine 1.5s ease-in-out;
           }
+          .animate-pulse-slow {
+            animation: pulse-slow 3s ease-in-out infinite;
+          }
+          .animate-faq-entrance {
+            animation: faq-entrance 1s ease-out forwards;
+          }
         `}</style>
       </section>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
