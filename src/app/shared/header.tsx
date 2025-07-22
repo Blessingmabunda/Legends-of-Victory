@@ -11,7 +11,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) => {
-  const pathname = usePathname(); // Get current route
+  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) =
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsMobileMenuOpen(false); // Close menu after clicking a link
+    setIsMobileMenuOpen(false);
   };
 
   const baseClasses = transparent 
@@ -74,7 +74,44 @@ const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) =
     },
   };
 
-  // Navigation items
+  // Enhanced sidebar animations
+  const sidebarVariants = {
+    open: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      }
+    },
+    closed: {
+      x: "100%",
+      opacity: 0,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+        delay: 0.15
+      }
+    }
+  };
+
+  const overlayVariants = {
+    open: {
+      opacity: 1,
+      transition: {
+        duration: 0.3
+      }
+    },
+    closed: {
+      opacity: 0,
+      transition: {
+        duration: 0.2
+      }
+    }
+  };
+
   const navItems = [
     { href: "/", label: "Home", id: "home" },
     { href: "/eventDetails", label: "Event Details", id: "details" },
@@ -100,7 +137,6 @@ const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) =
           {/* Desktop nav links */}
           <div className="hidden md:flex space-x-6">
             {navItems.map((item, index) => {
-              // Determine if the current item is active based on the pathname
               const isActive = pathname === item.href || (item.href === "/" && pathname === "/");
 
               return (
@@ -134,6 +170,8 @@ const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) =
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.3, ease: "easeOut" } }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               className="text-white p-2"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -161,32 +199,39 @@ const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) =
         </div>
       </nav>
 
-      {/* Mobile Sidebar */}
+      {/* Enhanced Mobile Sidebar */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-40 md:hidden">
-          {/* Overlay */}
-          <div 
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          {/* Animated Overlay */}
+          <motion.div 
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={overlayVariants}
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             onClick={() => setIsMobileMenuOpen(false)}
           />
           
-          {/* Sidebar content */}
+          {/* Magical Sidebar content */}
           <motion.div 
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'tween', ease: 'easeInOut' }}
-            className="absolute right-0 top-0 h-full w-64 bg-gray-900 shadow-xl"
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={overlayVariants}
+            className="absolute right-0 top-0 h-full w-72 bg-gradient-to-b from-gray-900 to-gray-800 shadow-2xl border-l border-gray-700"
           >
             <div className="flex flex-col h-full p-6">
-              <button 
+              {/* Close button with animation */}
+              <motion.button 
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="self-end text-white p-2 mb-4"
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                className="self-end text-white p-2 mb-6 bg-gray-800 rounded-full"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
-              </button>
+              </motion.button>
 
               <div className="flex flex-col space-y-6 flex-grow">
                 {navItems.map((item, index) => {
@@ -196,15 +241,23 @@ const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) =
                     <motion.div
                       key={item.label}
                       custom={index}
-                      variants={navItemVariants}
-                      initial="hidden"
-                      animate="visible"
+                      initial={{ x: 50, opacity: 0 }}
+                      animate={{ 
+                        x: 0, 
+                        opacity: 1,
+                        transition: {
+                          delay: index * 0.1 + 0.2,
+                          type: "spring",
+                          stiffness: 300
+                        }
+                      }}
+                      whileHover={{ x: 5 }}
                     >
                       <Link href={item.href}>
                         <button
                           onClick={() => scrollToSection(item.id)}
-                          className={`text-white hover:text-red-400 transition-colors duration-200 text-left text-lg ${
-                            isActive ? 'text-red-400' : ''
+                          className={`text-white hover:text-red-400 transition-colors duration-200 text-left text-lg w-full py-3 px-4 rounded-lg ${
+                            isActive ? 'bg-gray-700 text-red-400' : 'hover:bg-gray-700'
                           }`}
                         >
                           {item.label}
@@ -218,10 +271,20 @@ const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) =
               <div className="mt-auto pt-6">
                 <Link href="/register">
                   <motion.button
-                    variants={buttonVariants}
-                    initial="hidden"
-                    animate="visible"
-                    whileHover="hover"
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ 
+                      scale: 1, 
+                      opacity: 1,
+                      transition: {
+                        delay: 0.6,
+                        type: "spring"
+                      }
+                    }}
+                    whileHover={{ 
+                      scale: 1.05,
+                      backgroundColor: "#dc2626"
+                    }}
+                    whileTap={{ scale: 0.95 }}
                     className={`w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-md font-semibold transition-all duration-200 ${
                       pathname === "/register" ? 'ring-2 ring-red-400' : ''
                     }`}
