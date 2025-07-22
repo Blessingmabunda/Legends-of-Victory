@@ -126,30 +126,6 @@ const Leaderboard = () => {
     fetchLeaderboardData();
   }, []);
 
-  const getRankStyle = (rank: number) => {
-    switch (rank) {
-      case 1:
-        return "from-yellow-400/20 to-yellow-600/10 border-yellow-400/40 shadow-yellow-400/20";
-      case 2:
-        return "from-gray-300/20 to-gray-500/10 border-gray-300/40 shadow-gray-300/20";
-      case 3:
-        return "from-yellow-600/20 to-yellow-800/10 border-yellow-600/40 shadow-yellow-600/20";
-      default:
-        return "from-gray-900/50 to-gray-800/30 border-[#ef4444]/20 shadow-[#ef4444]/20";
-    }
-  };
-
-  const getRankIcon = (rank: number) => {
-    if (rank <= 3) {
-      return <Trophy className="w-8 h-8" rank={rank} />;
-    }
-    return (
-      <div className="w-8 h-8 rounded-full bg-[#ef4444]/20 flex items-center justify-center">
-        <span className="text-[#ef4444] font-bold">{rank}</span>
-      </div>
-    );
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black">
