@@ -76,7 +76,7 @@ const EventDetailsSection = () => {
         {/* Floating icons */}
         <div className="absolute top-32 left-10 animate-float opacity-70">
           <svg className="w-16 h-16 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1-empire0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
           </svg>
         </div>
         <div className="absolute bottom-20 right-10 animate-float-reverse opacity-70">
@@ -133,7 +133,7 @@ const EventDetailsSection = () => {
               detail1="R50,000"
               detail2=""
               icon={
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292..." />
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               }
               isVisible={isVisible}
               delay="0.6s"
@@ -224,27 +224,31 @@ const EventCard = ({
   icon: React.ReactNode;
   isVisible: boolean;
   delay: string;
-}) => (
-  <div
-    className={`group relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm rounded-xl p-6 border border-${color}-500/30 hover:border-${color}-500/60 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-${color}-500/20 animate-card-entrance`}
-    style={{ '--delay': delay } as React.CSSProperties}
-  >
+}) => {
+  return (
     <div
-      className={`absolute inset-0 bg-gradient-to-br from-${color}-600/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-    />
-    <div className="relative z-10">
+      className={`group relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm rounded-xl p-6 border border-${color}-500/30 hover:border-${color}-500/60 transition-all duration-700 transform hover:scale-105 hover:shadow-2xl hover:shadow-${color}-500/20 ${
+        isVisible ? 'animate-card-entrance opacity-100' : 'opacity-0 translate-y-8'
+      }`}
+      style={{ '--delay': delay } as React.CSSProperties}
+    >
       <div
-        className={`flex items-center justify-center w-16 h-16 bg-gradient-to-br from-${color}-500 to-${color}-700 rounded-full mb-4 mx-auto group-hover:animate-pulse`}
-      >
-        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          {icon}
-        </svg>
+        className={`absolute inset-0 bg-gradient-to-br from-${color}-600/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+      />
+      <div className="relative z-10">
+        <div
+          className={`flex items-center justify-center w-16 h-16 bg-gradient-to-br from-${color}-500 to-${color}-700 rounded-full mb-4 mx-auto group-hover:animate-pulse`}
+        >
+          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {icon}
+          </svg>
+        </div>
+        <h3 className="text-xl font-bold text-white mb-2 text-center">{title}</h3>
+        <p className={`text-${color}-400 font-semibold text-center`}>{detail1}</p>
+        {detail2 && <p className="text-white/80 text-center text-sm">{detail2}</p>}
       </div>
-      <h3 className="text-xl font-bold text-white mb-2 text-center">{title}</h3>
-      <p className={`text-${color}-400 font-semibold text-center`}>{detail1}</p>
-      {detail2 && <p className="text-white/80 text-center text-sm">{detail2}</p>}
     </div>
-  </div>
-);
+  );
+};
 
 export default EventDetailsSection;
