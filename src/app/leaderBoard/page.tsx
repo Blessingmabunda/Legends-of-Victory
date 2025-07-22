@@ -1,46 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Header from './../shared/header';
-
-interface Particle {
-  id: number;
-  x: number;
-  y: number;
-  delay: number;
-  duration: number;
-}
-
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: {
-    street: string;
-    suite: string;
-    city: string;
-    zipcode: string;
-    geo: {
-      lat: string;
-      lng: string;
-    }
-  };
-  phone: string;
-  website: string;
-  company: {
-    name: string;
-    catchPhrase: string;
-    bs: string;
-  };
-}
-
-interface Player {
-  id: number;
-  gamerTag: string;
-  points: number;
-  rank: number;
-}
+import { fetchUsers } from './../api/utils/api';
+import { User, Player, Particle } from './../api/types/models';
+import Header from '../shared/header';
 
 const Trophy = ({ className, rank }: { className?: string; rank: number }) => {
   const colors = {
@@ -90,26 +53,18 @@ const Leaderboard = () => {
     const fetchLeaderboardData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://jsonplaceholder.typicode.com/users');
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch leaderboard data');
-        }
-        
-        const users: User[] = await response.json();
+        const users = await fetchUsers();
         
         // Transform users into players with mock gaming data
         const transformedPlayers: Player[] = users.map((user, index) => ({
           id: user.id,
           gamerTag: user.username,
-          points: Math.floor(Math.random() * 5000) + 1000 + (10 - index) * 500, // Mock points with higher for earlier users
+          points: Math.floor(Math.random() * 5000) + 1000 + (10 - index) * 500,
           rank: index + 1
         }));
 
-        // Sort by points descending to create proper leaderboard
+        // Sort by points descending and update ranks
         const sortedPlayers = transformedPlayers.sort((a, b) => b.points - a.points);
-        
-        // Update ranks based on sorted order
         const finalPlayers = sortedPlayers.map((player, index) => ({
           ...player,
           rank: index + 1
@@ -125,6 +80,30 @@ const Leaderboard = () => {
 
     fetchLeaderboardData();
   }, []);
+
+  const getRankStyle = (rank: number) => {
+    switch (rank) {
+      case 1:
+        return "from-yellow-400/20 to-yellow-600/10 border-yellow-400/40 shadow-yellow-400/20";
+      case 2:
+        return "from-gray-300/20 to-gray-500/10 border-gray-300/40 shadow-gray-300/20";
+      case 3:
+        return "from-yellow-600/20 to-yellow-800/10 border-yellow-600/40 shadow-yellow-600/20";
+      default:
+        return "from-gray-900/50 to-gray-800/30 border-[#ef4444]/20 shadow-[#ef4444]/20";
+    }
+  };
+
+  const getRankIcon = (rank: number) => {
+    if (rank <= 3) {
+      return <Trophy className="w-8 h-8" rank={rank} />;
+    }
+    return (
+      <div className="w-8 h-8 rounded-full bg-[#ef4444]/20 flex items-center justify-center">
+        <span className="text-[#ef4444] font-bold">{rank}</span>
+      </div>
+    );
+  };
 
   if (loading) {
     return (
@@ -163,7 +142,6 @@ const Leaderboard = () => {
       <Header transparent={true} />
       
       <section className="relative min-h-screen py-20 overflow-hidden">
-
         {/* Animated Background Particles */}
         <div className="absolute inset-0 pointer-events-none">
           {particles.map((particle) => (
@@ -201,19 +179,17 @@ const Leaderboard = () => {
 
           {/* Leaderboard */}
           <div className="max-w-4xl mx-auto">
-            {players.map((player, index) => (
+            {players.map((player) => (
               <div
                 key={player.id}
                 className={`mb-6 bg-gradient-to-r backdrop-blur-sm rounded-2xl border shadow-2xl overflow-hidden transition-all duration-500 hover:scale-105 transform ${getRankStyle(player.rank)}`}
               >
                 <div className="p-8 flex items-center justify-between">
                   <div className="flex items-center space-x-6">
-                    {/* Rank Icon */}
                     <div className="flex items-center justify-center">
                       {getRankIcon(player.rank)}
                     </div>
                     
-                    {/* Player Info */}
                     <div className="flex flex-col">
                       <div className="flex items-center space-x-3 mb-2">
                         <h3 className={`text-2xl md:text-3xl font-bold transition-colors duration-300 ${
@@ -241,7 +217,6 @@ const Leaderboard = () => {
                     </div>
                   </div>
                   
-                  {/* Points */}
                   <div className="text-right">
                     <div className={`text-3xl md:text-4xl font-bold ${
                       player.rank === 1 ? 'text-yellow-400' :
@@ -255,7 +230,6 @@ const Leaderboard = () => {
                   </div>
                 </div>
                 
-                {/* Special highlight for top 3 */}
                 {player.rank <= 3 && (
                   <div className={`h-1 bg-gradient-to-r ${
                     player.rank === 1 ? 'from-yellow-400 to-yellow-600' :
@@ -287,7 +261,6 @@ const Leaderboard = () => {
           </div>
         </div>
 
-        {/* Custom CSS for animations */}
         <style jsx>{`
           @keyframes float-particle {
             0%, 100% {
