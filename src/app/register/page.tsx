@@ -30,7 +30,6 @@ export default function Register() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    // Create floating particles effect
     const createParticles = () => {
       const container = document.querySelector('.particles-bg');
       if (!container) return;
@@ -73,14 +72,12 @@ export default function Register() {
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
-    // Full Name validation
     if (!formData.fullName.trim()) {
       newErrors.fullName = 'Full name is required';
     } else if (formData.fullName.trim().length < 2) {
       newErrors.fullName = 'Full name must be at least 2 characters';
     }
 
-    // Gamer Tag validation
     if (!formData.gamerTag.trim()) {
       newErrors.gamerTag = 'Gamer tag is required';
     } else if (formData.gamerTag.trim().length < 3) {
@@ -89,14 +86,12 @@ export default function Register() {
       newErrors.gamerTag = 'Gamer tag can only contain letters, numbers, hyphens, and underscores';
     }
 
-    // Email validation
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       newErrors.email = 'Please enter a valid email address';
     }
 
-    // Favorite Game validation
     if (!formData.favoriteGame.trim()) {
       newErrors.favoriteGame = 'Favorite game title is required';
     }
@@ -112,7 +107,6 @@ export default function Register() {
       [name]: value
     }));
 
-    // Clear error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({
         ...prev,
@@ -129,8 +123,6 @@ export default function Register() {
     }
 
     setIsSubmitting(true);
-    
-    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     setIsSubmitting(false);

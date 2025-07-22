@@ -8,10 +8,8 @@ const EventDetailsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Trigger animations after mount
     setIsVisible(true);
 
-    // Particle effect
     const createEventParticles = () => {
       const container = document.querySelector('.event-particles-container');
       if (!container) {
@@ -21,15 +19,15 @@ const EventDetailsSection = () => {
 
       container.innerHTML = '';
 
-      for (let i = 0; i < 30; i++) { // Increased to 30 for visibility
+      for (let i = 0; i < 30; i++) { 
         const particle = document.createElement('div');
         particle.className = 'event-particle';
 
-        const size = Math.random() * 8 + 4; // 4–12px
+        const size = Math.random() * 8 + 4; 
         const posX = Math.random() * 100;
         const posY = Math.random() * 100;
         const delay = Math.random() * 5;
-        const duration = Math.random() * 10 + 10; // 10–20s
+        const duration = Math.random() * 10 + 10;
         const colors = ['#ef4444', '#8b5cf6', '#f59e0b', '#06b6d4'];
         const color = colors[Math.floor(Math.random() * colors.length)];
 
@@ -46,7 +44,7 @@ const EventDetailsSection = () => {
           pointer-events: none;
         `;
 
-        particle.style.setProperty('--tx', `${Math.random() * 100 - 50}px`); // Larger range
+        particle.style.setProperty('--tx', `${Math.random() * 100 - 50}px`); 
         particle.style.setProperty('--ty', `${Math.random() * 100 - 50}px`);
         container.appendChild(particle);
       }

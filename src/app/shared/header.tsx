@@ -11,7 +11,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) => {
-  const pathname = usePathname(); // Get current route
+  const pathname = usePathname(); 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
@@ -19,14 +19,13 @@ const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) =
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsMobileMenuOpen(false); // Close menu after clicking a link
+    setIsMobileMenuOpen(false); 
   };
 
   const baseClasses = transparent 
     ? "bg-black/50 backdrop-blur-sm" 
     : "bg-black";
 
-  // Animation variants for nav items
   const navItemVariants: Variants = {
     hidden: { opacity: 0, y: -20 },
     visible: (i: number) => ({
@@ -40,7 +39,6 @@ const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) =
     }),
   };
 
-  // Animation for the logo
   const logoVariants: Variants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: {
@@ -53,7 +51,6 @@ const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) =
     },
   };
 
-  // Animation for the register button
   const buttonVariants: Variants = {
     hidden: { opacity: 0, scale: 0.9 },
     visible: {
@@ -74,7 +71,6 @@ const Header: React.FC<HeaderProps> = ({ transparent = true, className = "" }) =
     },
   };
 
-  // Navigation items
   const navItems = [
     { href: "/", label: "Home", id: "home" },
     { href: "/eventDetails", label: "Event Details", id: "details" },

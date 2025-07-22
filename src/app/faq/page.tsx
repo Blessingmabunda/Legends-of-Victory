@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Header from './../shared/header';
 import Footer from './../shared/footer';
 
-// Local Particle type with color
 interface ParticleWithColor {
   id: number;
   x: number;
@@ -33,10 +32,8 @@ const FAQSection = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Trigger animations after mount
     setIsVisible(true);
 
-    // Create particles
     const createParticles = () => {
       const newParticles: ParticleWithColor[] = [];
       for (let i = 0; i < 30; i++) {
@@ -45,7 +42,7 @@ const FAQSection = () => {
           x: Math.random() * 100,
           y: Math.random() * 100,
           delay: Math.random() * 5,
-          duration: Math.random() * 10 + 10, // 10–20s
+          duration: Math.random() * 10 + 10, 
           color: ['#ef4444', '#8b5cf6', '#f59e0b'][Math.floor(Math.random() * 3)],
         });
       }

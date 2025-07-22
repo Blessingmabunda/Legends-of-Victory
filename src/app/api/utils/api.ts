@@ -1,4 +1,4 @@
-// utils/api.ts
+
 import { User } from '../types/models';
 
 const USERS_URL = 'https://jsonplaceholder.typicode.com/users';

@@ -1,12 +1,10 @@
 "use client";
-
 import React, { useState, useEffect } from 'react';
 import { fetchUsers } from './../api/utils/api';
-import { Player } from './../api/types/models'; // Only import Player
+import { Player } from './../api/types/models'; 
 import Header from '../shared/header';
 import Footer from './../shared/footer';
 
-// Local type for particles with color
 interface ParticleWithColor {
   id: number;
   x: number;
@@ -44,10 +42,8 @@ const Leaderboard = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Trigger animations after mount
     setIsVisible(true);
 
-    // Create particles
     const createParticles = () => {
       const newParticles: ParticleWithColor[] = [];
       for (let i = 0; i < 30; i++) {
@@ -72,7 +68,7 @@ const Leaderboard = () => {
         setLoading(true);
         const users = await fetchUsers();
         
-        // Transform users into players with mock gaming data
+       
         const transformedPlayers: Player[] = users.map((user, index) => ({
           id: user.id,
           gamerTag: user.username,
@@ -80,7 +76,7 @@ const Leaderboard = () => {
           rank: index + 1
         }));
 
-        // Sort by points descending and update ranks
+      
         const sortedPlayers = transformedPlayers.sort((a, b) => b.points - a.points);
         const finalPlayers = sortedPlayers.map((player, index) => ({
           ...player,

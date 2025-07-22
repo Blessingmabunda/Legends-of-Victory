@@ -9,22 +9,18 @@ const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Trigger animation after component mounts
     setIsVisible(true);
 
-    // Particle effect for magic
     const createParticles = () => {
       const container = document.querySelector('.particles-container');
       if (!container) return;
       
-      // Clear existing particles
       container.innerHTML = '';
 
       for (let i = 0; i < 50; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         
-        // Random properties
         const size = Math.random() * 10 + 5;
         const posX = Math.random() * 100;
         const posY = Math.random() * 100;
@@ -43,7 +39,6 @@ const HeroSection = () => {
           box-shadow: 0 0 ${size}px ${size/2}px ${color};
         `;
         
-        // Set random movement
         particle.style.setProperty('--tx', `${Math.random() * 200 - 100}px`);
         particle.style.setProperty('--ty', `${Math.random() * 200 - 100}px`);
         
@@ -53,7 +48,6 @@ const HeroSection = () => {
 
     createParticles();
 
-    // Cleanup function
     return () => {
       const container = document.querySelector('.particles-container');
       if (container) container.innerHTML = '';
