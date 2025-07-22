@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Header from './../shared/header';
-
+import Footer from './../shared/footer';
 interface Particle {
   id: number;
   x: number;
@@ -227,10 +228,12 @@ const FAQSection = () => {
                 Still have questions? Join our Discord community for instant support from tournament officials and fellow competitors!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/register">
                 <button className="relative bg-gradient-to-r from-[#ef4444] via-gray-600 to-blue-600 hover:from-[#ef4444] hover:via-gray-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl group overflow-hidden">
                   <span className="relative z-10">Join the Battle</span>
                   <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-shine"></span>
                 </button>
+                </Link>
                 <button className="border-2 border-[#ef4444] text-[#ef4444] hover:bg-[#ef4444] hover:text-white font-bold py-3 px-8 rounded-lg transition-all duration-300">
                   Join Discord
                 </button>
@@ -262,6 +265,7 @@ const FAQSection = () => {
           }
         `}</style>
       </section>
+      <Footer/>
     </div>
   );
 };

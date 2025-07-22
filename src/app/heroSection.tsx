@@ -2,7 +2,8 @@
 
 import React, { useEffect } from 'react';
 import Link from 'next/link';
-import Header from './shared/header'; 
+import Header from './shared/header';
+import Footer from './shared/footer';
 
 const HeroSection = () => {
   useEffect(() => {
@@ -55,64 +56,65 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section 
-      className="relative h-screen flex items-center justify-center bg-cover bg-center overflow-hidden"
-      style={{
-        backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.15)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')",
-      }}
-      id="home"
-    >
+    <div className="flex flex-col min-h-screen">
       {/* Use the global Header component */}
       <Header transparent={true} />
 
-      {/* Magic particles container */}
-      <div className="particles-container absolute inset-0 pointer-events-none"></div>
-      
-      {/* Animated floating swords */}
-      <div className="absolute left-10 top-1/4 animate-float">
-        <svg className="w-20 h-20 text-red-500 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path d="M12 22v-8m0 0V2l5 5-5 5z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </div>
-      <div className="absolute right-10 bottom-1/4 animate-float-reverse">
-        <svg className="w-20 h-20 text-blue-500 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path d="M12 22v-8m0 0V2l5 5-5 5z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </div>
-      
-      {/* Glowing text container */}
-      <div className="text-center px-4 z-10 relative">
-        {/* Animated title with gradient */}
-        <h1 className="text-5xl md:text-7xl font-bold mb-4">
-          <span className="text-white">Legends of Victory:</span>{' '}
-          <span className="text-[#ef4444]">Battle Royale Cup</span>
-        </h1>
-
-
-
+      <section 
+        className="relative flex-grow flex items-center justify-center bg-cover bg-center overflow-hidden"
+        style={{
+          backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.15)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')",
+        }}
+        id="home"
+      >
+        {/* Magic particles container */}
+        <div className="particles-container absolute inset-0 pointer-events-none"></div>
         
-        {/* Glowing subtitle */}
-        <h2 className="text-2xl md:text-3xl mb-8 text-white/90 tracking-wider animate-pulse">
-          <span className="text-shadow">Compete for glory.</span> <span className="text-red-400 text-shadow-red">Only one can win.</span>
-        </h2>
-        
-        {/* Epic button with hover effects */}
-        <Link href="/register">
-        <button className="relative bg-[#ef4444] hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group overflow-hidden">
-        <span className="relative z-10">Register Now</span>
-        <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-shine"></span>
-      </button>
-
-        </Link>
-        
-        {/* Floating crown icon */}
-        <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <svg className="w-16 h-16 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0V6H8a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1H8a1 1 0 110-2h1v-1a1 1 0 011-1zM5 9a1 1 0 100-2H4a1 1 0 100 2h1zm10 0a1 1 0 100-2h-1a1 1 0 100 2h1zM5 15a1 1 0 100-2H4a1 1 0 100 2h1zm10 0a1 1 0 100-2h-1a1 1 0 100 2h1z" clipRule="evenodd"></path>
+        {/* Animated floating swords */}
+        <div className="absolute left-10 top-1/4 animate-float">
+          <svg className="w-20 h-20 text-red-500 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 22v-8m0 0V2l5 5-5 5z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </div>
-      </div>
-      
+        <div className="absolute right-10 bottom-1/4 animate-float-reverse">
+          <svg className="w-20 h-20 text-blue-500 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 22v-8m0 0V2l5 5-5 5z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+        
+        {/* Glowing text container */}
+        <div className="text-center px-4 z-10 relative">
+          {/* Animated title with gradient */}
+          <h1 className="text-5xl md:text-7xl font-bold mb-4">
+            <span className="text-white">Legends of Victory:</span>{' '}
+            <span className="text-[#ef4444]">Battle Royale Cup</span>
+          </h1>
+          
+          {/* Glowing subtitle */}
+          <h2 className="text-2xl md:text-3xl mb-8 text-white/90 tracking-wider animate-pulse">
+            <span className="text-shadow">Compete for glory.</span>{' '}
+            <span className="text-red-400 text-shadow-red">Only one can win.</span>
+          </h2>
+          
+          {/* Epic button with hover effects */}
+          <Link href="/register">
+            <button className="relative bg-[#ef4444] hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group overflow-hidden">
+              <span className="relative z-10">Register Now</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-shine"></span>
+            </button>
+          </Link>
+          
+          {/* Floating crown icon */}
+          <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg className="w-16 h-16 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0V6H8a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1H8a1 1 0 110-2h1v-1a1 1 0 011-1zM5 9a1 1 0 100-2H4a1 1 0 100 2h1zm10 0a1 1 0 100-2h-1a1 1 0 100 2h1zM5 15a1 1 0 100-2H4a1 1 0 100 2h1zm10 0a1 1 0 100-2h-1a1 1 0 100 2h1z" clipRule="evenodd"></path>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      {/* Use the global Footer component */}
+      <Footer />
       
       {/* CSS for animations */}
       <style jsx>{`
@@ -153,7 +155,7 @@ const HeroSection = () => {
           animation: particle-move var(--duration) linear infinite;
         }
       `}</style>
-    </section>
+    </div>
   );
 };
 

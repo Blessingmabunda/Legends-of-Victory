@@ -4,12 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { fetchUsers } from './../api/utils/api';
 import { User, Player, Particle } from './../api/types/models';
 import Header from '../shared/header';
+import Footer from './../shared/footer';
 
 const Trophy = ({ className, rank }: { className?: string; rank: number }) => {
   const colors = {
-    1: "text-yellow-400", // Gold
-    2: "text-gray-300",   // Silver
-    3: "text-yellow-600"  // Bronze
+    1: "text-yellow-400",
+    2: "text-gray-300",  
+    3: "text-yellow-600" 
   };
   
   return (
@@ -283,6 +284,7 @@ const Leaderboard = () => {
           }
         `}</style>
       </section>
+      <Footer/>
     </div>
   );
 };

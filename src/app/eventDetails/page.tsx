@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import Header from './../shared/header';
+import Footer from './../shared/footer';
 
 const EventDetailsSection = () => {
   useEffect(() => {
@@ -143,7 +144,7 @@ const EventDetailsSection = () => {
             </p>
           </div>
         </div>
-
+      
         {/* STYLES */}
         <style jsx>{`
           @keyframes float {
@@ -172,10 +173,13 @@ const EventDetailsSection = () => {
             animation: particle-drift var(--duration) linear infinite;
           }
         `}</style>
+        
       </section>
+      <Footer />
     </>
   );
 };
+
 
 // Reusable Card Component
 const EventCard = ({
